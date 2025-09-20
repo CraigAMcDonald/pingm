@@ -68,13 +68,11 @@ func main() {
 	for keepRunning {
 
 		// used to force each iteration to wait for the timeout
-		wg.Add(1)
-		go func() {
+		wg.Go(func() {
 			// 1ms added to the batch timeout so not the exact value of the ping timeout
 			// N.B. I am not sure the timeout is required, need more testing to prove either way
 			time.Sleep(timeoutDuration + 1*time.Millisecond)
-			wg.Done()
-		}()
+		})
 
 		printChan <- timestamp()
 
